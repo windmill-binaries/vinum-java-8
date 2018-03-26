@@ -6,6 +6,7 @@ import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
@@ -133,6 +134,29 @@ public class TestWineCellar {
 		assertThat("Virtus Gewürztraminer", equalTo(actual.get(1).getName()));
 		assertThat("Virtus Pinot Grigio", equalTo(actual.get(2).getName()));
 		assertThat("Virtus Sauvignon Blanc", equalTo(actual.get(3).getName()));
+	}
+	
+	@Test
+	public void shouldTestForWineByPrice() {
+		Optional<Wine> cheapest = wineCellar.stream()
+								  .sorted(Comparator.comparing(Wine::getPrice))
+								  .findFirst();
+		
+		assertTrue(cheapest.isPresent());
+		assertThat(cheapest.get().getColor(), equalTo(WineColor.WHITE));
+		assertThat(cheapest.get().getName(), equalTo("Virtus Sauvignon Blanc"));
+		assertThat(cheapest.get().getYear(), equalTo(2014));
+		assertThat(cheapest.get().getPrice(), equalTo(768));
+		
+		Optional<Wine> mostExpensive = wineCellar.stream()
+												 .sorted(Comparator.comparing(Wine::getPrice).reversed())
+												 .findFirst();
+		
+		assertTrue(mostExpensive.isPresent());
+		assertThat(mostExpensive.get().getColor(), equalTo(WineColor.RED));
+		assertThat(mostExpensive.get().getName(), equalTo("Virtus Credo Red"));
+		assertThat(mostExpensive.get().getYear(), equalTo(2015));
+		assertThat(mostExpensive.get().getPrice(), equalTo(2150));
 	}
 
 }
