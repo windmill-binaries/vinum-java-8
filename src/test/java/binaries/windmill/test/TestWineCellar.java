@@ -6,7 +6,6 @@ import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
@@ -16,6 +15,7 @@ import org.junit.Test;
 
 import binaries.windmill.model.Wine;
 import binaries.windmill.model.WineColor;
+import binaries.windmill.util.ModelUtils;
 import binaries.windmill.util.WineUtils;
 
 public class TestWineCellar {
@@ -111,7 +111,7 @@ public class TestWineCellar {
 	@Test
 	public void shouldTestWineListSorted() {
 		// sort wines by price
-		List<Wine> actual = WineUtils.sortWines(wineCellar, Comparator.comparing(Wine::getPrice));
+		List<Wine> actual = ModelUtils.sortList(wineCellar, Wine::getPrice);
 		assertFalse(actual.isEmpty());
 		assertThat(768, equalTo(actual.get(0).getPrice()));
 		assertThat(915, equalTo(actual.get(1).getPrice()));
@@ -119,7 +119,7 @@ public class TestWineCellar {
 		assertThat(2150, equalTo(actual.get(3).getPrice()));
 		
 		// sort wines by year
-		actual = WineUtils.sortWines(wineCellar, Comparator.comparing(Wine::getYear));
+		actual = ModelUtils.sortList(wineCellar, Wine::getYear);
 		assertFalse(actual.isEmpty());
 		assertThat(2014, equalTo(actual.get(0).getYear()));
 		assertThat(2015, equalTo(actual.get(1).getYear()));
@@ -127,7 +127,7 @@ public class TestWineCellar {
 		assertThat(2017, equalTo(actual.get(3).getYear()));
 		
 		// sort wines by name
-		actual = WineUtils.sortWines(wineCellar, Comparator.comparing(Wine::getName));
+		actual = ModelUtils.sortList(wineCellar, Wine::getName);
 		assertFalse(actual.isEmpty());
 		assertThat("Virtus Credo Red", equalTo(actual.get(0).getName()));
 		assertThat("Virtus Gewürztraminer", equalTo(actual.get(1).getName()));

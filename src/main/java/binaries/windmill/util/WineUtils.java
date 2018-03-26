@@ -3,7 +3,6 @@ package binaries.windmill.util;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
-import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -42,14 +41,6 @@ public class WineUtils {
 			 .map(wine -> wine.getName())
 			 .map(String::length)
 			 .reduce(Integer::max);
-	}
-	
-	// TODO: this should be beautified using generics
-	@SuppressWarnings({"rawtypes", "unchecked"})
-	public static List<Wine> sortWinesC(List<Wine> wines, Function<Wine, Comparable> comp) {
-		return (List<Wine>) wines.stream()
-			 .sorted(Comparator.comparing(comp))
-			 .collect(Collectors.toList());
 	}
 	
 	public static List<Wine> sortWines(List<Wine> wines, Comparator<Wine> comparator) {
